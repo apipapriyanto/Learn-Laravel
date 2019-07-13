@@ -26,7 +26,7 @@ class HomeController extends Controller
     public function index()
     {
         // Mail::to('apriyanto@smkmuhi.sch.id')->send(new UsersRegisteredEmail());
-        return new UsersRegisteredEmail();
-        // return view('home');
+        // return new UsersRegisteredEmail();
+        return view('home');
     }
 }
