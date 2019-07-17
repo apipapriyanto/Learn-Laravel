@@ -31,3 +31,8 @@ Route::get('/seed', function(App\Post $post) {
 });
 
 Route::get('/post', 'PostController@index');
+
+Route::post('/status/store', 'StatusController@store')->name('status.store');
+Route::get('/status/{status}', 'StatusController@show')->name('status.show');
+Route::post('/status/{status}/comment', 'StatusCommantController@store')->name('comment.store');
+Route::get('/notification', 'NotificationController@index')->name('notification.index');

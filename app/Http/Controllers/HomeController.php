@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Mail\UsersRegisteredEmail;
 use Mail;
+use App\Status;
 
 class HomeController extends Controller
 {
@@ -27,6 +28,9 @@ class HomeController extends Controller
     {
         // Mail::to('apriyanto@smkmuhi.sch.id')->send(new UsersRegisteredEmail());
         // return new UsersRegisteredEmail();
-        return view('home');
+
+        $statuses = Status::latest()->get();
+
+        return view('home', compact('statuses'));
     }
 }

@@ -6,20 +6,21 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Messages\SlackMessage;
 
-class UserRegisteredNotification extends Notification
+class StatusCommentsNotification extends Notification
 {
     use Queueable;
+
+    public $comment;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($comment)
     {
-        //
+        $this->comment = $comment;
     }
 
     /**
@@ -30,7 +31,7 @@ class UserRegisteredNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['slack'];
+        return ['database'];
     }
 
     /**
@@ -42,9 +43,9 @@ class UserRegisteredNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('Selamat Datang :)')
+                    ->line('The introduction to the notification.')
                     ->action('Notification Action', url('/'))
-                    ->line('Terimakasih Telah Melakukan Registrasi.git ');
+                    ->line('Thank you for using our application!');
     }
 
     /**
@@ -53,17 +54,13 @@ class UserRegisteredNotification extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
-    {
-        return [
-            //
-        ];
-    }
+    // public function toArray($notifiable)
+    // {
+    //     return $this->comment->toArray();
+    // }
 
-    public function toSlack($notifiable)
+    public function toDatabase($notifiable)
     {
-        return (new SlackMessage)
-                    ->content('Seseorang Malakukan Registrasi!!');
+        return $this->comment->toArray();
     }
-
 }

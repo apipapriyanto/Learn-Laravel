@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Status;
 
 class User extends Authenticatable
 {
@@ -36,4 +37,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function routeNotificationForSlack($notification)
+    {
+        return 'https://hooks.slack.com/services/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';
+    }
+
+    public function statuses() {
+        return $this->hasMany(Status::class);
+    }
 }
